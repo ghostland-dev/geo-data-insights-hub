@@ -1,98 +1,114 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from "@/components/ui/button";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { ChevronDown, ChevronUp, Mail, Phone } from 'lucide-react';
 
 const FAQ = () => {
-  const faqItems = [
+  const [activeQuestion, setActiveQuestion] = useState<number | null>(0);
+
+  const toggleQuestion = (index: number) => {
+    setActiveQuestion(activeQuestion === index ? null : index);
+  };
+
+  const faqs = [
     {
-      question: "Qu'est-ce que GeoDataHub exactement ?",
-      answer: "GeoDataHub est une plateforme SaaS (Software as a Service) qui permet aux professionnels des géosciences de centraliser, analyser et visualiser leurs données géologiques, géophysiques et environnementales. Notre solution combine stockage cloud, outils d'analyse avancés et fonctionnalités collaboratives pour optimiser la gestion de vos projets."
+      question: "Qu'est-ce que GeoDataHub ?",
+      answer: "GeoDataHub est une plateforme SaaS dédiée à la gestion, l'analyse et la visualisation de données géoscientifiques. Elle permet aux professionnels des sciences de la terre de centraliser leurs données, d'extraire des insights pertinents et de collaborer efficacement sur des projets communs."
     },
     {
-      question: "Quels formats de données sont pris en charge ?",
-      answer: "GeoDataHub prend en charge une large gamme de formats de données géoscientifiques, notamment : données sismiques (SEG-Y, SEG-D), fichiers SIG (Shapefile, GeoJSON, KML), données de forage (LAS, LIS), images satellites (GeoTIFF), données géochimiques (CSV, Excel), modèles 3D (OBJ, GOCAD) et bien d'autres. Si vous utilisez un format spécifique non listé, contactez-nous pour vérifier sa compatibilité."
+      question: "Quels formats de données sont supportés ?",
+      answer: "GeoDataHub prend en charge une large gamme de formats spécifiques aux géosciences, notamment les formats SEG-Y et SEG-D pour les données sismiques, les fichiers SIG (Shapefile, GeoJSON, KML), les données de forage (LAS, LIS), les images satellites (GeoTIFF), les données géochimiques (CSV, Excel), ainsi que différents formats de modèles 3D (OBJ, GOCAD)."
     },
     {
-      question: "Comment fonctionne la période d'essai gratuit ?",
-      answer: "Notre essai gratuit de 14 jours vous donne un accès complet à toutes les fonctionnalités de la formule Professional. Aucune carte de crédit n'est requise pour commencer. À la fin de la période d'essai, vous pouvez choisir l'abonnement qui correspond le mieux à vos besoins ou continuer avec un compte gratuit limité."
+      question: "Comment fonctionne l'essai gratuit ?",
+      answer: "Nous proposons un essai gratuit de 14 jours qui vous donne accès à toutes les fonctionnalités de notre formule Professional. Aucune carte de crédit n'est requise pour commencer. À la fin de la période d'essai, vous pouvez choisir de souscrire à l'une de nos formules ou d'arrêter l'utilisation sans frais."
     },
     {
-      question: "Mes données sont-elles sécurisées sur votre plateforme ?",
-      answer: "Absolument. La sécurité est notre priorité. Toutes les données sont chiffrées au repos et en transit avec des protocoles de pointe. Nous utilisons l'authentification multi-facteurs, des audits de sécurité réguliers et notre infrastructure est conforme aux normes ISO 27001. De plus, vous restez propriétaire de vos données à tout moment et pouvez les exporter ou les supprimer selon vos besoins."
+      question: "Mes données sont-elles sécurisées ?",
+      answer: "Absolument. La sécurité est notre priorité. Toutes les données sont chiffrées de bout en bout, stockées dans des centres de données sécurisés et conformes aux normes industrielles (ISO 27001, SOC 2). Nous proposons également des contrôles d'accès granulaires pour vous permettre de gérer précisément qui peut voir et modifier vos données."
     },
     {
-      question: "Puis-je intégrer GeoDataHub avec mes outils existants ?",
-      answer: "Oui, GeoDataHub offre une API REST complète et des connecteurs spécifiques pour les logiciels couramment utilisés dans le secteur des géosciences, comme ArcGIS, QGIS, Petrel, Leapfrog et bien d'autres. Notre équipe peut également développer des connecteurs personnalisés pour vos outils spécifiques si nécessaire."
+      question: "Puis-je utiliser GeoDataHub hors ligne ?",
+      answer: "Oui, notre application mobile permet de collecter des données sur le terrain même sans connexion Internet. Ces données sont stockées localement et synchronisées automatiquement avec votre compte GeoDataHub dès que vous retrouvez une connexion. Pour l'accès à la plateforme complète, une connexion Internet est nécessaire."
     },
     {
-      question: "Comment fonctionne le modèle de tarification ?",
-      answer: "Notre modèle de tarification est basé sur un abonnement mensuel ou annuel, avec trois formules principales : Basic, Professional et Enterprise. Les prix varient en fonction du volume de stockage, du nombre d'utilisateurs et des fonctionnalités avancées incluses. Nous proposons également des remises pour les institutions académiques et les ONG. Consultez notre page Tarifs pour plus de détails ou contactez-nous pour une offre personnalisée."
+      question: "Comment fonctionne la visualisation 3D ?",
+      answer: "Notre moteur de visualisation 3D avancé vous permet d'explorer vos données géologiques sous tous les angles. Vous pouvez naviguer librement dans des modèles géologiques complexes, ajuster la transparence des couches, réaliser des coupes transversales dynamiques et superposer différents types de données pour une compréhension approfondie des structures souterraines."
     },
     {
-      question: "Quel type de support technique est disponible ?",
-      answer: "Tous nos abonnements incluent un support par email avec un temps de réponse garanti. Les formules Professional et Enterprise bénéficient également d'un support prioritaire par téléphone et chat en direct. Les clients Enterprise disposent d'un gestionnaire de compte dédié et d'un support 24/7. Nous proposons aussi des sessions de formation et de la documentation complète pour tous nos utilisateurs."
+      question: "Est-il possible d'intégrer GeoDataHub à nos outils existants ?",
+      answer: "Tout à fait. GeoDataHub propose une API REST complète et des connecteurs prédéfinis pour les logiciels courants du secteur (ArcGIS, QGIS, Petrel, Leapfrog, etc.). Nos équipes peuvent également développer des connecteurs personnalisés pour répondre à vos besoins spécifiques d'intégration."
     },
     {
-      question: "GeoDataHub peut-il fonctionner hors ligne ?",
-      answer: "Bien que GeoDataHub soit principalement une solution cloud, nous proposons une application de collecte de données terrain qui fonctionne hors ligne et synchronise les données une fois la connexion rétablie. Pour les clients Enterprise, nous pouvons également discuter de solutions hybrides ou on-premise adaptées à vos contraintes spécifiques."
-    },
-    {
-      question: "Comment puis-je migrer mes données existantes vers GeoDataHub ?",
-      answer: "Nous offrons plusieurs options de migration : import direct via notre interface web, transfert par lot via FTP sécurisé, ou service de migration assistée par notre équipe technique. Pour les grands volumes de données ou les structures complexes, nous proposons un service de migration clé en main dans le cadre de notre offre d'onboarding."
-    },
-    {
-      question: "Proposez-vous des solutions personnalisées pour les grandes organisations ?",
-      answer: "Absolument. Notre formule Enterprise inclut des possibilités de personnalisation étendues, notamment : développement de modules spécifiques, intégrations sur mesure, déploiements privés, formations dédiées et SLA personnalisés. Contactez notre équipe commerciale pour discuter de vos besoins spécifiques."
+      question: "Proposez-vous des formations pour utiliser la plateforme ?",
+      answer: "Oui, nous proposons plusieurs options de formation : des webinaires réguliers gratuits, une documentation complète et des tutoriels vidéo. Les formules Professional et Enterprise incluent également des sessions de formation personnalisées pour votre équipe. Notre objectif est de vous rendre autonome le plus rapidement possible."
     }
   ];
 
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
-      <main className="flex-grow">
-        <section className="section-padding">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                Questions fréquentes
-              </h1>
-              
-              <p className="text-lg text-muted-foreground mb-12">
-                Vous trouverez ci-dessous les réponses aux questions les plus fréquemment posées
-                sur GeoDataHub et nos services. Si vous ne trouvez pas l'information que vous 
-                cherchez, n'hésitez pas à nous contacter directement.
-              </p>
-              
-              <Accordion type="single" collapsible className="w-full">
-                {faqItems.map((item, index) => (
-                  <AccordionItem key={index} value={`item-${index}`}>
-                    <AccordionTrigger className="text-lg font-medium text-left">
-                      {item.question}
-                    </AccordionTrigger>
-                    <AccordionContent className="text-muted-foreground">
-                      {item.answer}
-                    </AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
-              
-              <div className="mt-16 p-8 bg-muted rounded-xl text-center">
-                <h3 className="text-2xl font-bold mb-4">Vous avez d'autres questions ?</h3>
-                <p className="mb-6 text-muted-foreground">
-                  Notre équipe est prête à vous aider et à répondre à toutes vos interrogations.
-                </p>
-                <Button asChild>
-                  <a href="/contact">Contactez-nous</a>
-                </Button>
-              </div>
+      <main className="flex-grow pt-28 pb-16">
+        <section className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+              Questions fréquemment posées
+            </h1>
+            <p className="text-xl text-muted-foreground mb-12">
+              Tout ce que vous devez savoir sur GeoDataHub et nos services
+            </p>
+            
+            <div className="space-y-6">
+              {faqs.map((faq, index) => (
+                <div 
+                  key={index}
+                  className={`border rounded-lg transition-all duration-200 ${
+                    activeQuestion === index ? "bg-muted/30" : "hover:bg-muted/10"
+                  }`}
+                >
+                  <button
+                    className="flex items-center justify-between w-full text-left p-6"
+                    onClick={() => toggleQuestion(index)}
+                  >
+                    <h3 className="text-xl font-medium">{faq.question}</h3>
+                    {activeQuestion === index ? (
+                      <ChevronUp className="h-5 w-5 flex-shrink-0 text-muted-foreground" />
+                    ) : (
+                      <ChevronDown className="h-5 w-5 flex-shrink-0 text-muted-foreground" />
+                    )}
+                  </button>
+                  {activeQuestion === index && (
+                    <div className="px-6 pb-6 pt-0">
+                      <p className="text-muted-foreground">{faq.answer}</p>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="container mx-auto px-4 mt-16 max-w-3xl">
+          <div className="bg-muted/30 rounded-xl p-8 text-center">
+            <h2 className="text-2xl font-bold mb-4">Vous ne trouvez pas de réponse à votre question ?</h2>
+            <p className="mb-8 text-muted-foreground">
+              Notre équipe est disponible pour vous aider. N'hésitez pas à nous contacter.
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <Button className="flex items-center gap-2" asChild>
+                <a href="mailto:contact@geodatahub.com">
+                  <Mail className="h-5 w-5" />
+                  <span>Nous envoyer un email</span>
+                </a>
+              </Button>
+              <Button variant="outline" className="flex items-center gap-2" asChild>
+                <a href="tel:+33123456789">
+                  <Phone className="h-5 w-5" />
+                  <span>Nous appeler</span>
+                </a>
+              </Button>
             </div>
           </div>
         </section>

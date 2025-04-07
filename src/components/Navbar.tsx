@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,32 +13,41 @@ const Navbar = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
-            <div className="h-10 w-10 rounded-md bg-gradient-to-r from-geo-blue to-geo-teal flex items-center justify-center text-white font-bold text-xl mr-2">
-              G
-            </div>
-            <span className="font-bold text-xl tracking-tight">GeoData<span className="text-geo-blue">Hub</span></span>
+            <Link to="/" className="flex items-center">
+              <div className="h-10 w-10 rounded-md bg-gradient-to-r from-geo-blue to-geo-teal flex items-center justify-center text-white font-bold text-xl mr-2">
+                G
+              </div>
+              <span className="font-bold text-xl tracking-tight">GeoData<span className="text-geo-blue">Hub</span></span>
+            </Link>
           </div>
           
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <a href="#features" className="text-foreground/80 hover:text-foreground transition-colors">
+            <Link to="/features" className="text-foreground/80 hover:text-foreground transition-colors">
               Fonctionnalités
-            </a>
-            <a href="#pricing" className="text-foreground/80 hover:text-foreground transition-colors">
+            </Link>
+            <Link to="/pricing" className="text-foreground/80 hover:text-foreground transition-colors">
               Abonnements
-            </a>
-            <a href="#about" className="text-foreground/80 hover:text-foreground transition-colors">
+            </Link>
+            <Link to="/about" className="text-foreground/80 hover:text-foreground transition-colors">
               À propos
-            </a>
-            <a href="#contact" className="text-foreground/80 hover:text-foreground transition-colors">
+            </Link>
+            <Link to="/faq" className="text-foreground/80 hover:text-foreground transition-colors">
+              FAQ
+            </Link>
+            <Link to="/contact" className="text-foreground/80 hover:text-foreground transition-colors">
               Contact
-            </a>
+            </Link>
           </div>
           
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="outline">Se connecter</Button>
-            <Button>Essai Gratuit</Button>
+            <Button variant="outline" asChild>
+              <Link to="/login">Se connecter</Link>
+            </Button>
+            <Button asChild>
+              <Link to="/register">Essai Gratuit</Link>
+            </Button>
           </div>
           
           {/* Mobile Menu Button */}
@@ -53,21 +63,28 @@ const Navbar = () => {
       {isOpen && (
         <div className="md:hidden bg-background border-b shadow-lg">
           <div className="container mx-auto px-4 py-4 flex flex-col space-y-4">
-            <a href="#features" className="text-foreground/80 hover:text-foreground transition-colors py-2">
+            <Link to="/features" className="text-foreground/80 hover:text-foreground transition-colors py-2" onClick={() => setIsOpen(false)}>
               Fonctionnalités
-            </a>
-            <a href="#pricing" className="text-foreground/80 hover:text-foreground transition-colors py-2">
+            </Link>
+            <Link to="/pricing" className="text-foreground/80 hover:text-foreground transition-colors py-2" onClick={() => setIsOpen(false)}>
               Abonnements
-            </a>
-            <a href="#about" className="text-foreground/80 hover:text-foreground transition-colors py-2">
+            </Link>
+            <Link to="/about" className="text-foreground/80 hover:text-foreground transition-colors py-2" onClick={() => setIsOpen(false)}>
               À propos
-            </a>
-            <a href="#contact" className="text-foreground/80 hover:text-foreground transition-colors py-2">
+            </Link>
+            <Link to="/faq" className="text-foreground/80 hover:text-foreground transition-colors py-2" onClick={() => setIsOpen(false)}>
+              FAQ
+            </Link>
+            <Link to="/contact" className="text-foreground/80 hover:text-foreground transition-colors py-2" onClick={() => setIsOpen(false)}>
               Contact
-            </a>
+            </Link>
             <div className="flex flex-col space-y-3 pt-2">
-              <Button variant="outline">Se connecter</Button>
-              <Button>Essai Gratuit</Button>
+              <Button variant="outline" asChild onClick={() => setIsOpen(false)}>
+                <Link to="/login">Se connecter</Link>
+              </Button>
+              <Button asChild onClick={() => setIsOpen(false)}>
+                <Link to="/register">Essai Gratuit</Link>
+              </Button>
             </div>
           </div>
         </div>

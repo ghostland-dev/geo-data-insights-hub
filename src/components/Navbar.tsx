@@ -48,6 +48,9 @@ const Navbar = () => {
             <Button asChild>
               <Link to="/register">Essai Gratuit</Link>
             </Button>
+            <Button variant="secondary" asChild>
+              <Link to="/dashboard">Dashboard</Link>
+            </Button>
           </div>
           
           {/* Mobile Menu Button */}
@@ -84,6 +87,9 @@ const Navbar = () => {
               </Button>
               <Button asChild onClick={() => setIsOpen(false)}>
                 <Link to="/register">Essai Gratuit</Link>
+              </Button>
+              <Button variant="secondary" asChild onClick={() => setIsOpen(false)}>
+                <Link to="/dashboard">Dashboard</Link>
               </Button>
             </div>
           </div>
